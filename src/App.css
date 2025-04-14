@@ -162,3 +162,11 @@ button.new-game {
     white-space: nowrap;
     border: 0;
 }
+.hint {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    color: #555;
+  }
+  

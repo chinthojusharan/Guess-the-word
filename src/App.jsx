@@ -4,6 +4,8 @@ import { useState } from "react";
 import clsx from "clsx";
 import { getFarewellText, getRandomWord } from "./util";
 import Confetti from "react-confetti";
+import { words } from "./words";
+import { hints } from "./hints";
 
 function App() {
   const [currentWord, setcurrentWord] = useState(() => getRandomWord());
@@ -126,7 +128,41 @@ function App() {
       );
     }
   }
+  // function getHintForWord(word) {
+  //   const wordIndex = languages.findIndex((lang) => lang.name.toLowerCase() === word.toLowerCase());
 
+  //   if (wordIndex !== -1) {
+  //     return hints[wordIndex]; // Assuming hints correspond to the index of languages
+  //   }
+  //   return "No hint available"; // If no match found
+  // }
+
+
+  // function getHintForWord(word) {
+  //   const wordIndex = languages.findIndex(
+  //     (lang) => lang.name.trim().toLowerCase() === word.trim().toLowerCase()
+  //   );
+  //   console.log("Word:", word, "Index:", wordIndex);
+  //   if (wordIndex !== -1 && hints[wordIndex]) {
+  //     return hints[wordIndex];
+  //   }
+  //   return "No hint available";
+  // }
+
+  function getHintForWord(word) {
+    const normalizedWord = word.trim().toLowerCase(); // Normalize word for matching
+    const wordIndex = words.findIndex(w => w.trim().toLowerCase() === normalizedWord); // Find index of the word
+
+    // If the word is found in the list, return the corresponding hint
+    if (wordIndex !== -1) {
+      return hints[wordIndex];  // Get the hint at the same index
+    }
+
+    return "No hint available";  // Default message if no hint is found
+  }
+  
+  
+  
   return (
     <>
       <main>
@@ -158,11 +194,15 @@ function App() {
           </p>
         </section>
         <section className="keyboard">{keyboardElements}</section>
+        <section className="hint">
+          <p>Hint: {getHintForWord(currentWord)}</p>
+        </section>
         {isGameOver && (
           <button className="new-game" onClick={startNewGame}>
             New Game
           </button>
         )}
+        
       </main>
     </>
   );
